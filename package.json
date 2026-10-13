@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "description": "An interactive password security trainer and quiz application built with Web Components.",
-  "main": "src/server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "start": "node src/server/server.js",
+    "dev": "nodemon src/server/server.js",
     "lint": "npx eslint ./src",
     "lint:fix": "npx eslint ./src --fix"
   },
