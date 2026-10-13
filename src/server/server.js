@@ -13,11 +13,8 @@ const __dirname = path.dirname(__filename)
 const app = express()
 const port = process.env.PORT || 3000
 
-app.use(express.static(path.join(__dirname, 'client')))
-
-app.get('/', (req, res) => {
-  res.send('Hello from the Express server')
-})
+app.use(express.static(path.join(__dirname, '../client')))
+app.use('/modules', express.static(path.join(__dirname, '../modules')))
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`)
