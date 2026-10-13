@@ -1,0 +1,27 @@
+{
+  "name": "password-module",
+  "version": "1.0.0",
+  "description": "A password validation and generation moudle.",
+  "homepage": "https://github.com/hanmar31/password-module#readme",
+  "bugs": {
+    "url": "https://github.com/hanmar31/password-module/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanmar31/password-module.git"
+  },
+  "license": "MIT",
+  "author": "Hanna Mårtensson",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node test-app/app.js",
+    "start": "node test-app/app.js",
+    "lint": "npx eslint ./src",
+    "lint:fix": "npx eslint ./src --fix"
+  },
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.10",
+    "eslint": "^8.57.1"
+  }
+}
