@@ -135,6 +135,18 @@ class RuleChecklist {
       test: password => this.#validator.hasSpecialChars(password)
     }
   }
+
+  /**
+   * Gets the rules for the password.
+   *
+   * @param {string} password - The password to check.
+   * @returns {object[]} A list of rules with a label and passed value for the password.
+   */
+  getVisibleRules (password) {
+    if (password.length === 0) {
+      return []
+    }
+  }
 }
 
 export { RuleChecklist }
