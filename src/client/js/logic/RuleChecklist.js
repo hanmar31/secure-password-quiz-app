@@ -141,10 +141,38 @@ class RuleChecklist {
    *
    * @param {string} password - The password to check.
    * @returns {object[]} A list of rules with a label and passed value for the password.
+   * @throws {Error} If the password is null, undefined, or not a string.
    */
   getVisibleRules (password) {
+    this.#validateInput(password)
     if (password.length === 0) {
       return []
+    }
+    const rulesList = []
+
+    for (const rule of this.#passwordRules) {
+      const passed = rule.test(password)
+      rulesList.push({ label: rule.label, passed })
+
+      if (!passed) {
+        break
+      }
+    }
+    return rulesList
+  }
+
+  /**
+   * Validates the password input.
+   *
+   * @param {string} password - The password to validate.
+   * @throws {Error} If the password is null, undefined, or not a string.
+   */
+  #validateInput (password) {
+    if (password === null || password === undefined) {
+      throw new Error('Password cannot be null or undefined')
+    }
+    if (typeof password !== 'string') {
+      throw new Error('Password must be a string')
     }
   }
 }
