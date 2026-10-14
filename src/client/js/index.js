@@ -6,6 +6,7 @@
 import { PasswordValidator } from '/modules/Password-module/src/index.js'
 import { Quiz } from '/modules/QuizEngine-module/src/index.js'
 import './components/rule-list/index.js'
+import './components/password-rule-checker/index.js'
 
 const validator = new PasswordValidator()
 console.log(validator.getMinimumPasswordLength())
