@@ -3,13 +3,4 @@
  * @version 1.0.0
  */
 
-import { PasswordValidator } from '/modules/Password-module/src/index.js'
-import { Quiz } from '/modules/QuizEngine-module/src/index.js'
-import './components/rule-list/index.js'
-import './components/password-rule-checker/index.js'
-
-const validator = new PasswordValidator()
-console.log(validator.getMinimumPasswordLength())
-
-const quiz = new Quiz()
-console.log(quiz.getQuestionCount())
+import './components/password-app/index.js'

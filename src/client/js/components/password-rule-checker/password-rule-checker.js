@@ -4,6 +4,7 @@
  */
 
 import { RuleChecklist } from '../../logic/RuleChecklist.js'
+import '../rule-list/index.js'
 
 /**
  * Checks the password rules and shows the result.
