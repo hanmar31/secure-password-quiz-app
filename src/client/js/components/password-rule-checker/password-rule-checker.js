@@ -37,6 +37,12 @@ class PasswordRuleChecker extends HTMLElement {
       const password = passwordInput.value
       const visibleRules = this.#ruleChecklist.getVisibleRules(password)
       this.#ruleList.rules = visibleRules
+      if (this.#ruleChecklist.allRulesPassed(visibleRules)) {
+        this.dispatchEvent(new CustomEvent('all-rules-passed', {
+          bubbles: true,
+          composed: true
+        }))
+      }
     })
 
     this.shadowRoot.append(passwordInput, confirmButton, this.#ruleList)
