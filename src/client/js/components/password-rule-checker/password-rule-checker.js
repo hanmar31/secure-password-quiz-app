@@ -3,12 +3,16 @@
  * @version 1.0.0
  */
 
+import { RuleChecklist } from '../../logic/RuleChecklist.js'
+
 /**
  * Checks the password rules and shows the result.
  */
 class PasswordRuleChecker extends HTMLElement {
+  #ruleList = document.createElement('rule-list')
+  #ruleChecklist = new RuleChecklist()
   /**
-   *Creates the component and attaches a shadow DOM.
+   * Creates the component and attaches a shadow DOM.
    */
   constructor () {
     super()
@@ -18,16 +22,24 @@ class PasswordRuleChecker extends HTMLElement {
   }
 
   /**
-   * Renders the password inout field and confirm button.
+   * Renders the password input field, confirm button and the password rule checklist.
    */
   #render () {
     const passwordInput = document.createElement('input')
     passwordInput.placeholder = 'New password...'
+    passwordInput.type = 'text'
+    passwordInput.setAttribute('aria-label', 'Password')
 
     const confirmButton = document.createElement('button')
     confirmButton.textContent = 'Confirm'
 
-    this.shadowRoot.append(passwordInput, confirmButton)
+    confirmButton.addEventListener('click', () => {
+      const password = passwordInput.value
+      const visibleRules = this.#ruleChecklist.getVisibleRules(password)
+      this.#ruleList.rules = visibleRules
+    })
+
+    this.shadowRoot.append(passwordInput, confirmButton, this.#ruleList)
   }
 }
 
