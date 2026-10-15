@@ -175,6 +175,19 @@ class RuleChecklist {
       throw new Error('Password must be a string')
     }
   }
+
+  /**
+   * Checks if all the password rules passed.
+   *
+   * @param {object[]} rules - The password rules.
+   * @returns {boolean} True if the rules passed, otherwise false.
+   */
+  allRulesPassed (rules) {
+    if (rules.length === 0) {
+      return false
+    }
+    return rules.at(-1).passed
+  }
 }
 
 export { RuleChecklist }
