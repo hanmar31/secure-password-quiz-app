@@ -2,7 +2,10 @@
  * @author Hanna Mårtensson <hm223dq@lnu.student.se>
  * @version 1.0.0
  */
+import { QuizContent } from '../../logic/QuizContent.js'
+import { QuizSession } from '/modules/QuizEngine-module/src/index.js'
 import '../password-rule-checker/index.js'
+import '../quiz-view/index.js'
 /**
  * Displays the password app.
  */
@@ -40,7 +43,40 @@ class PasswordApp extends HTMLElement {
     const startQuizButton = document.createElement('button')
     startQuizButton.textContent = 'Start the Quiz!'
 
+    startQuizButton.addEventListener('click', () => {
+      this.#showQuiz()
+    })
+
     this.shadowRoot.append(revealMessage, startQuizButton)
+  }
+
+  /**
+   * Starts the quiz.
+   */
+  #showQuiz () {
+    this.shadowRoot.replaceChildren()
+    const questionContent = new QuizContent()
+    const session = new QuizSession(questionContent.createQuiz())
+
+    const quizView = document.createElement('quiz-view')
+    quizView.questionContent = questionContent
+    quizView.session = session
+
+    this.shadowRoot.appendChild(quizView)
+
+    quizView.addEventListener('quiz-finished', () => {
+      this.#showGenerateStep()
+    })
+  }
+
+  /**
+   * Shows the generate step.
+   */
+  #showGenerateStep () {
+    this.shadowRoot.replaceChildren()
+    const placeholder = document.createElement('p')
+    placeholder.textContent = 'Generate step coming soon'
+    this.shadowRoot.appendChild(placeholder)
   }
 }
 customElements.define('password-app', PasswordApp)
