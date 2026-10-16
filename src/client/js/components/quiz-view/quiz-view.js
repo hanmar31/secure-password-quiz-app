@@ -49,9 +49,13 @@ class QuizView extends HTMLElement {
 
     this.shadowRoot.appendChild(questionText)
 
-    for (const optionText of currentQuestion.getOptions()) {
+    for (const [index, optionText] of currentQuestion.getOptions().entries()) {
       const optionButton = document.createElement('button')
       optionButton.textContent = optionText
+
+      optionButton.addEventListener('click', () => {
+        console.log(this.#session.submitAnswer(index))
+      })
 
       this.shadowRoot.append(optionButton)
     }
