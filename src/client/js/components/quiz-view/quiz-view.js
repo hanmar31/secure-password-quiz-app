@@ -95,20 +95,28 @@ class QuizView extends HTMLElement {
 
     const details = this.#questionContent.getDetails(currentQuestion)
     const correctOption = details.options.find(option => option.correct)
-    const correctOptionText = document.createElement('p')
-    correctOptionText.textContent = `Correct answer: ${correctOption.text}`
-    const correctOptionExplanation = document.createElement('p')
-    correctOptionExplanation.textContent = correctOption.explanation
+    const correctOptionText = this.#createParagraph(`Correct answer: ${correctOption.text}`)
+    const correctOptionExplanation = this.#createParagraph(correctOption.explanation)
     this.shadowRoot.appendChild(feedbackHeader)
     if (!correct) {
       const chosenOption = details.options[index]
-      const wrongOptionText = document.createElement('p')
-      wrongOptionText.textContent = `Your answer: ${chosenOption.text}`
-      const wrongOptionExplanation = document.createElement('p')
-      wrongOptionExplanation.textContent = chosenOption.explanation
+      const wrongOptionText = this.#createParagraph(`Your answer: ${chosenOption.text}`)
+      const wrongOptionExplanation = this.#createParagraph(chosenOption.explanation)
       this.shadowRoot.append(wrongOptionText, wrongOptionExplanation)
     }
     this.shadowRoot.append(correctOptionText, correctOptionExplanation, this.#createNextButton())
+  }
+
+  /**
+   * Creates a paragraph element with the given text.
+   *
+   * @param {string} text - The text to display.
+   * @returns {HTMLParagraphElement} The paragraph element.
+   */
+  #createParagraph (text) {
+    const paragraph = document.createElement('p')
+    paragraph.textContent = text
+    return paragraph
   }
 
   /**
@@ -125,6 +133,7 @@ class QuizView extends HTMLElement {
           bubbles: true,
           composed: true
         }))
+        return
       }
       this.#render()
     })
