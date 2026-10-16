@@ -8,6 +8,7 @@
  */
 class QuizView extends HTMLElement {
   #session
+  #questionContent
 
   /**
    * Creates the component and attaches a shadow DOM.
@@ -37,6 +38,24 @@ class QuizView extends HTMLElement {
   }
 
   /**
+   * Sets the question content that holds each questions explanations.
+   *
+   * @param {object} questionContent - The question content.
+   */
+  set questionContent (questionContent) {
+    this.#questionContent = questionContent
+  }
+
+  /**
+   * Gets the question content.
+   *
+   * @returns {object} The question content.
+   */
+  get questionContent () {
+    return this.#questionContent
+  }
+
+  /**
    * Renders the current question.
    */
   #render () {
@@ -54,11 +73,26 @@ class QuizView extends HTMLElement {
       optionButton.textContent = optionText
 
       optionButton.addEventListener('click', () => {
-        console.log(this.#session.submitAnswer(index))
+        const correct = this.#session.submitAnswer(index)
+        this.#renderFeedback(currentQuestion, index, correct)
       })
 
       this.shadowRoot.append(optionButton)
     }
+  }
+
+  /**
+   * Renders feedback for the submitted answer.
+   *
+   * @param {object} currentQuestion - The question that was answered.
+   * @param {number} index - The index of the selected option.
+   * @param {boolean} correct - Whether the answer was correct.
+   */
+  #renderFeedback (currentQuestion, index, correct) {
+    this.shadowRoot.replaceChildren()
+    const feedbackHeader = document.createElement('h2')
+    feedbackHeader.textContent = correct ? 'Correct!' : 'Incorrect!'
+    this.shadowRoot.appendChild(feedbackHeader)
   }
 }
 
