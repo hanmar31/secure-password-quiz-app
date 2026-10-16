@@ -19,11 +19,13 @@ class QuizContent {
    */
   createQuiz () {
     const quiz = new Quiz()
-    for (const item of quizData) {
-      const optionTexts = item.options.map(option => option.text)
-      const correctIndex = item.options.findIndex(option => option.correct)
+    for (const item of this.#shuffle(quizData)) {
+      const shuffledOptions = this.#shuffle(item.options)
+      const optionTexts = shuffledOptions.map(option => option.text)
+      const correctIndex = shuffledOptions.findIndex(option => option.correct)
       const question = new Question(item.text, optionTexts, correctIndex)
-      this.#questionDetails.set(question, item)
+      const details = { ...item, options: shuffledOptions }
+      this.#questionDetails.set(question, details)
       quiz.addQuestion(question)
     }
     return quiz
