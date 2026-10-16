@@ -38,5 +38,22 @@ class QuizContent {
   getDetails (question) {
     return this.#questionDetails.get(question)
   }
+
+  /**
+   * Creates a shuffled copy of the items.
+   *
+   * @param {Array} items - The items to shuffle.
+   * @returns {Array} A shuffled copy of the items.
+   */
+  #shuffle (items) {
+    const shuffled = [...items]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      const temporaryShuffle = shuffled[i]
+      shuffled[i] = shuffled[j]
+      shuffled[j] = temporaryShuffle
+    }
+    return shuffled
+  }
 }
 export { QuizContent }
