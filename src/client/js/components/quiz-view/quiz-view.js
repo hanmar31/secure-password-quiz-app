@@ -42,10 +42,19 @@ class QuizView extends HTMLElement {
   #render () {
     this.shadowRoot.replaceChildren()
 
-    const currentQuestion = document.createElement('p')
-    currentQuestion.textContent = this.#session.getCurrentQuestion().getText()
+    const currentQuestion = this.#session.getCurrentQuestion()
 
-    this.shadowRoot.append(currentQuestion)
+    const questionText = document.createElement('p')
+    questionText.textContent = currentQuestion.getText()
+
+    this.shadowRoot.appendChild(questionText)
+
+    for (const optionText of currentQuestion.getOptions()) {
+      const optionButton = document.createElement('button')
+      optionButton.textContent = optionText
+
+      this.shadowRoot.append(optionButton)
+    }
   }
 }
 
