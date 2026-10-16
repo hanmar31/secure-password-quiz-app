@@ -49,7 +49,31 @@ class GenerateStep extends HTMLElement {
 
     const passwordText = document.createElement('p')
     passwordText.textContent = this.#generatedPassword
-    this.shadowRoot.append(passwordText)
+    this.shadowRoot.appendChild(passwordText)
+    this.shadowRoot.appendChild(this.#createValidationBox())
+  }
+
+  /**
+   * Creates box to validate a password.
+   *
+   * @returns {HTMLDivElement} The box with the input and Validate button.
+   */
+  #createValidationBox () {
+    const validationDiv = document.createElement('div')
+
+    const validationHeader = document.createElement('h2')
+    validationHeader.textContent = 'Validate the generated password here:'
+
+    const validationInput = document.createElement('input')
+    validationInput.type = 'text'
+    validationInput.setAttribute('aria-label', 'Generated Password')
+
+    const validationButton = document.createElement('button')
+    validationButton.textContent = 'Validate'
+
+    validationDiv.append(validationHeader, validationInput, validationButton)
+
+    return validationDiv
   }
 }
 customElements.define('generate-step', GenerateStep)
