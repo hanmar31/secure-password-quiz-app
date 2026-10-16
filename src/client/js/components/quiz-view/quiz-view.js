@@ -108,7 +108,28 @@ class QuizView extends HTMLElement {
       wrongOptionExplanation.textContent = chosenOption.explanation
       this.shadowRoot.append(wrongOptionText, wrongOptionExplanation)
     }
-    this.shadowRoot.append(correctOptionText, correctOptionExplanation)
+    this.shadowRoot.append(correctOptionText, correctOptionExplanation, this.#createNextButton())
+  }
+
+  /**
+   * Creates a button to display the next question or finish the quiz.
+   *
+   * @returns {HTMLButtonElement} The next question button.
+   */
+  #createNextButton () {
+    const nextButton = document.createElement('button')
+    nextButton.textContent = 'Next Question'
+    nextButton.addEventListener('click', () => {
+      if (this.#session.isComplete()) {
+        this.dispatchEvent(new CustomEvent('quiz-finished', {
+          bubbles: true,
+          composed: true
+        }))
+      }
+      this.#render()
+    })
+
+    return nextButton
   }
 }
 
