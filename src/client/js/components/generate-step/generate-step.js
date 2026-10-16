@@ -68,12 +68,39 @@ class GenerateStep extends HTMLElement {
     validationInput.type = 'text'
     validationInput.setAttribute('aria-label', 'Generated Password')
 
+    const messageText = document.createElement('p')
+
     const validationButton = document.createElement('button')
     validationButton.textContent = 'Validate'
 
-    validationDiv.append(validationHeader, validationInput, validationButton)
+    validationButton.addEventListener('click', () => {
+      this.#showValidationResult(validationInput, messageText)
+    })
+
+    validationDiv.append(validationHeader, validationInput, validationButton, messageText)
 
     return validationDiv
+  }
+
+  /**
+   * Shows the result score and label of the validated password.
+   *
+   * @param {HTMLInputElement} input - The input holding the password.
+   * @param {HTMLParagraphElement} messageText - The paragraph that shows messages and the result.
+   */
+  #showValidationResult (input, messageText) {
+    const inputPassword = input.value.trim()
+    if (inputPassword.length === 0) {
+      messageText.textContent = 'Paste the generated password first'
+      return
+    }
+    if (inputPassword !== this.#generatedPassword) {
+      messageText.textContent = 'That is not the generated password. Please copy it exactly.'
+      input.value = ''
+      return
+    }
+    const result = this.#validator.getStrength(inputPassword)
+    messageText.textContent = `Score: ${result.getScore()}, ${result.getLabel()}`
   }
 }
 customElements.define('generate-step', GenerateStep)
