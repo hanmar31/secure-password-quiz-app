@@ -1,5 +1,5 @@
 {
-  "name": "password-security-masterclass",
+  "name": "secure-password-quiz-app",
   "version": "1.0.0",
   "type": "module",
   "description": "An interactive password security trainer and quiz application built with Web Components.",
