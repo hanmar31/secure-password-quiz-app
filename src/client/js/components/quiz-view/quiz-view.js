@@ -92,7 +92,23 @@ class QuizView extends HTMLElement {
     this.shadowRoot.replaceChildren()
     const feedbackHeader = document.createElement('h2')
     feedbackHeader.textContent = correct ? 'Correct!' : 'Incorrect!'
+
+    const details = this.#questionContent.getDetails(currentQuestion)
+    const correctOption = details.options.find(option => option.correct)
+    const correctOptionText = document.createElement('p')
+    correctOptionText.textContent = `Correct answer: ${correctOption.text}`
+    const correctOptionExplanation = document.createElement('p')
+    correctOptionExplanation.textContent = correctOption.explanation
     this.shadowRoot.appendChild(feedbackHeader)
+    if (!correct) {
+      const chosenOption = details.options[index]
+      const wrongOptionText = document.createElement('p')
+      wrongOptionText.textContent = `Your answer: ${chosenOption.text}`
+      const wrongOptionExplanation = document.createElement('p')
+      wrongOptionExplanation.textContent = chosenOption.explanation
+      this.shadowRoot.append(wrongOptionText, wrongOptionExplanation)
+    }
+    this.shadowRoot.append(correctOptionText, correctOptionExplanation)
   }
 }
 
