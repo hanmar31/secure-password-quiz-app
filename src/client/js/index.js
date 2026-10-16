@@ -4,3 +4,4 @@
  */
 
 import './components/password-app/index.js'
+import './components/generate-step/index.js'
