@@ -6,11 +6,14 @@ import { QuizContent } from '../../logic/QuizContent.js'
 import { QuizSession } from '/modules/QuizEngine-module/src/index.js'
 import '../password-rule-checker/index.js'
 import '../quiz-view/index.js'
+import '../generate-step/index.js'
 
 /**
  * Displays the password app.
  */
 class PasswordApp extends HTMLElement {
+  #questionContent = new QuizContent()
+
   /**
    * Creates the component and attaches a shadow DOM.
    */
@@ -56,11 +59,10 @@ class PasswordApp extends HTMLElement {
    */
   #showQuiz () {
     this.shadowRoot.replaceChildren()
-    const questionContent = new QuizContent()
-    const session = new QuizSession(questionContent.createQuiz())
+    const session = new QuizSession(this.#questionContent.createQuiz())
 
     const quizView = document.createElement('quiz-view')
-    quizView.questionContent = questionContent
+    quizView.questionContent = this.#questionContent
     quizView.session = session
 
     this.shadowRoot.appendChild(quizView)
@@ -75,9 +77,46 @@ class PasswordApp extends HTMLElement {
    */
   #showGenerateStep () {
     this.shadowRoot.replaceChildren()
-    const placeholder = document.createElement('p')
-    placeholder.textContent = 'Generate step coming soon'
-    this.shadowRoot.appendChild(placeholder)
+
+    const generateStep = document.createElement('generate-step')
+
+    generateStep.addEventListener('password-tested', () => {
+      this.#showFinalQuestion()
+    })
+
+    this.shadowRoot.appendChild(generateStep)
+  }
+
+  /**
+   * Starts the final quiz question.
+   */
+  #showFinalQuestion () {
+    this.shadowRoot.replaceChildren()
+    const session = new QuizSession(this.#questionContent.createFinalQuiz())
+
+    const finalQuestion = document.createElement('quiz-view')
+    finalQuestion.questionContent = this.#questionContent
+    finalQuestion.session = session
+
+    finalQuestion.addEventListener('quiz-finished', () => {
+      this.#showEndScreen()
+    })
+
+    this.shadowRoot.appendChild(finalQuestion)
+  }
+
+  /**
+   * Displays the end screen with a message when the quiz is finished.
+   */
+  #showEndScreen () {
+    this.shadowRoot.replaceChildren()
+    const endScreenTitle = document.createElement('h2')
+    endScreenTitle.textContent = 'You made it! Quiz completed!'
+
+    const endScreenParagraph = document.createElement('p')
+    endScreenParagraph.textContent = 'Hopefully now you know a little bit more about password security and what to keep in mind when you create a password. And remember a password that follows rules on a website are not guaranteed to be safe.'
+
+    this.shadowRoot.append(endScreenTitle, endScreenParagraph)
   }
 }
 customElements.define('password-app', PasswordApp)

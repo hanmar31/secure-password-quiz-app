@@ -126,7 +126,7 @@ class QuizView extends HTMLElement {
    */
   #createNextButton () {
     const nextButton = document.createElement('button')
-    nextButton.textContent = 'Next Question'
+    nextButton.textContent = this.#session.isComplete() ? 'Finish quiz' : 'Next Question'
     nextButton.addEventListener('click', () => {
       if (this.#session.isComplete()) {
         this.dispatchEvent(new CustomEvent('quiz-finished', {
