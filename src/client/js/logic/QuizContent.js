@@ -4,7 +4,7 @@
  */
 
 import { Quiz, Question } from '/modules/QuizEngine-module/src/index.js'
-import { quizData } from './quizData.js'
+import { quizData, finalQuestionData } from './quizData.js'
 
 /**
  * Builds the quiz and keeps the explanations for each question.
@@ -26,7 +26,7 @@ class QuizContent {
   }
 
   /**
-   * Creates oen question from a data iteam and keeps its details.
+   * Creates one question from a data iteam and keeps its details.
    *
    * @param {object} item - The question data, with text and options.
    * @returns {object} The created question.
@@ -67,6 +67,19 @@ class QuizContent {
       shuffled[j] = temporaryShuffle
     }
     return shuffled
+  }
+
+  /**
+   * Creates the final quiz question from the quiz data.
+   *
+   * @returns {Quiz} A quiz containing only the final question
+   */
+  createFinalQuiz () {
+    const finalQuiz = new Quiz()
+    for (const item of finalQuestionData) {
+      finalQuiz.addQuestion(this.#createQuestion(item))
+    }
+    return finalQuiz
   }
 }
 export { QuizContent }
