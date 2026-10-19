@@ -6,6 +6,7 @@ import { QuizContent } from '../../logic/QuizContent.js'
 import { QuizSession } from '/modules/QuizEngine-module/src/index.js'
 import '../password-rule-checker/index.js'
 import '../quiz-view/index.js'
+
 /**
  * Displays the password app.
  */
