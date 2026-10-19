@@ -2,7 +2,7 @@
  * @author Hanna Mårtensson <hm223dq@lnu.student.se>
  * @version 1.0.0
  */
-
+import { StyleLoader } from '../../utils/StyleLoader.js'
 /**
  * Displays the password rules.
  */
@@ -15,6 +15,7 @@ class RuleList extends HTMLElement {
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
+    new StyleLoader().applyTo(this.shadowRoot, import.meta.url)
   }
 
   /**
