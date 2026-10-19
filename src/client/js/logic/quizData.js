@@ -69,4 +69,20 @@ const quizData = [
   }
 ]
 
-export { quizData }
+const finalQuestionData = [
+  {
+    text: 'The password you generated passed every rule and scored 5, strong password. Is it guaranteed to be safe?',
+    options: [
+      { text: 'Yes, it followed every rule and got the top score.', correct: false, explanation: 'The score only counts which rules the password follows. A password can follow every rule and still be weak, for example if it is built on a predictable pattern.' },
+      {
+        text: 'Yes, a computer generated it, so it is random and cannot be guessed.', correct: false, explanation: 'Random only helps if the randomness is unpredictable. This app\'s generator uses Math.random(), which is not designed for that, so treat it as a demo, not a source of real passwords.'
+      },
+      {
+        text: 'Not guaranteed. The score only checks which rules it follows', correct: true, explanation: 'The score measures composition, not safety. A password can also be unsafe because it is reused, phished, or leaked in a breach. Real safety also depends on a cryptographically secure generator, uniqueness, and extra protection like two-factor authentication.'
+      }
+    ],
+    source: 'NIST guidance & NCSC Password Guidance'
+  }
+]
+
+export { quizData, finalQuestionData }
