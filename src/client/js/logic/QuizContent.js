@@ -20,15 +20,26 @@ class QuizContent {
   createQuiz () {
     const quiz = new Quiz()
     for (const item of this.#shuffle(quizData)) {
-      const shuffledOptions = this.#shuffle(item.options)
-      const optionTexts = shuffledOptions.map(option => option.text)
-      const correctIndex = shuffledOptions.findIndex(option => option.correct)
-      const question = new Question(item.text, optionTexts, correctIndex)
-      const details = { ...item, options: shuffledOptions }
-      this.#questionDetails.set(question, details)
-      quiz.addQuestion(question)
+      quiz.addQuestion(this.#createQuestion(item))
     }
     return quiz
+  }
+
+  /**
+   * Creates oen question from a data iteam and keeps its details.
+   *
+   * @param {object} item - The question data, with text and options.
+   * @returns {object} The created question.
+   */
+  #createQuestion (item) {
+    const shuffledOptions = this.#shuffle(item.options)
+    const optionTexts = shuffledOptions.map(option => option.text)
+    const correctIndex = shuffledOptions.findIndex(option => option.correct)
+    const question = new Question(item.text, optionTexts, correctIndex)
+    const details = { ...item, options: shuffledOptions }
+    this.#questionDetails.set(question, details)
+
+    return question
   }
 
   /**
