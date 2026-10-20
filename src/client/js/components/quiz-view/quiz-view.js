@@ -3,6 +3,8 @@
  * @version 1.0.0
  */
 
+import { StyleLoader } from '../../utils/StyleLoader.js'
+
 /**
  * A component that displays the quiz.
  */
@@ -16,6 +18,7 @@ class QuizView extends HTMLElement {
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
+    new StyleLoader().applyTo(this.shadowRoot, import.meta.url)
   }
 
   /**
@@ -95,28 +98,34 @@ class QuizView extends HTMLElement {
 
     const details = this.#questionContent.getDetails(currentQuestion)
     const correctOption = details.options.find(option => option.correct)
-    const correctOptionText = this.#createParagraph(`Correct answer: ${correctOption.text}`)
-    const correctOptionExplanation = this.#createParagraph(correctOption.explanation)
+
     this.shadowRoot.appendChild(feedbackHeader)
+
     if (!correct) {
       const chosenOption = details.options[index]
-      const wrongOptionText = this.#createParagraph(`Your answer: ${chosenOption.text}`)
-      const wrongOptionExplanation = this.#createParagraph(chosenOption.explanation)
+      const wrongOptionText = this.#createFeedbackBox(`Your answer: ${chosenOption.text}`, 'incorrect-box')
+      const wrongOptionExplanation = this.#createFeedbackBox(chosenOption.explanation, 'incorrect-box')
       this.shadowRoot.append(wrongOptionText, wrongOptionExplanation)
     }
+
+    const correctOptionText = this.#createFeedbackBox(`Correct answer: ${correctOption.text}`, 'correct-box')
+    const correctOptionExplanation = this.#createFeedbackBox(correctOption.explanation, 'correct-box')
+
     this.shadowRoot.append(correctOptionText, correctOptionExplanation, this.#createNextButton())
   }
 
   /**
-   * Creates a paragraph element with the given text.
+   * Creates a styled feedback box element with the given text and class.
    *
-   * @param {string} text - The text to display.
-   * @returns {HTMLParagraphElement} The paragraph element.
+   * @param {string} text The text to display.
+   * @param {string} className The CSS class for styling (correct-box or incorrect-box).
+   * @returns {HTMLDivElement} The feedback box element.
    */
-  #createParagraph (text) {
-    const paragraph = document.createElement('p')
-    paragraph.textContent = text
-    return paragraph
+  #createFeedbackBox (text, className) {
+    const box = document.createElement('div')
+    box.textContent = text
+    box.classList.add('feedback-box', className)
+    return box
   }
 
   /**
@@ -126,6 +135,7 @@ class QuizView extends HTMLElement {
    */
   #createNextButton () {
     const nextButton = document.createElement('button')
+    nextButton.classList.add('next-button')
     nextButton.textContent = this.#session.isComplete() ? 'Finish quiz' : 'Next Question'
     nextButton.addEventListener('click', () => {
       if (this.#session.isComplete()) {
