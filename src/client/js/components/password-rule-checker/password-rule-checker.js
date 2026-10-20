@@ -5,6 +5,7 @@
 
 import { RuleChecklist } from '../../logic/RuleChecklist.js'
 import '../rule-list/index.js'
+import { StyleLoader } from '../../utils/StyleLoader.js'
 
 /**
  * Checks the password rules and shows the result.
@@ -18,6 +19,7 @@ class PasswordRuleChecker extends HTMLElement {
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
+    new StyleLoader().applyTo(this.shadowRoot, import.meta.url)
 
     this.#render()
   }
@@ -26,6 +28,9 @@ class PasswordRuleChecker extends HTMLElement {
    * Renders the password input field, confirm button and the password rule checklist.
    */
   #render () {
+    const inputContainer = document.createElement('div')
+    inputContainer.classList.add('input-container')
+
     const passwordInput = document.createElement('input')
     passwordInput.placeholder = 'New password...'
     passwordInput.type = 'text'
@@ -46,7 +51,8 @@ class PasswordRuleChecker extends HTMLElement {
       }
     })
 
-    this.shadowRoot.append(passwordInput, confirmButton, this.#ruleList)
+    inputContainer.append(passwordInput, confirmButton)
+    this.shadowRoot.append(inputContainer, this.#ruleList)
   }
 }
 

@@ -1,0 +1,33 @@
+p {
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+    width: 50%;
+    padding: 10px;
+    border: 2px solid #eec18e;
+    border-radius: 5px;
+    background-color: #fdf8e1;
+
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+button {
+font-size: medium;
+padding: 5px;
+color: #2c0703;
+background-color: #f8dfc1;
+font-weight: bold;
+transition: background .2s, transform 0.2s; 
+border-radius: 7px;
+border: 2px solid #ebb475;
+}
+
+button:hover {
+    background-color: #eec18e;
+}

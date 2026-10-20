@@ -4,6 +4,7 @@
  */
 import { QuizContent } from '../../logic/QuizContent.js'
 import { QuizSession } from '/modules/QuizEngine-module/src/index.js'
+import { StyleLoader } from '../../utils/StyleLoader.js'
 import '../password-rule-checker/index.js'
 import '../quiz-view/index.js'
 import '../generate-step/index.js'
@@ -20,6 +21,7 @@ class PasswordApp extends HTMLElement {
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
+    new StyleLoader().applyTo(this.shadowRoot, import.meta.url)
     this.#render()
   }
 

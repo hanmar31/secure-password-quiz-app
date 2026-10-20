@@ -1,3 +1,23 @@
 li {
-    color: red;
+    border-radius: 7px;
+    padding: 6px 10px;
+    margin-bottom: 4px;
+}
+
+li.rule-item-failed {
+  background-color: #f0888a9f;
+  border: solid 2px #ff6060d3;
+  color: rgb(151, 3, 3);
+}
+
+li.rule-item-passed {
+  background-color: #d0f0c0;
+  border: solid 2px #93c572;
+}
+
+ul {
+    width: 380px;
+    margin: 1rem auto;
+    padding: 1rem;
+    list-style: none;
 }

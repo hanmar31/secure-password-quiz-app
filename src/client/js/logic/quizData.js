@@ -20,7 +20,7 @@ const quizData = [
       { text: 'A longer passphrase of random words like horse-lollipop-stapler-library(30 characters)', correct: true, explanation: 'Length is actually more important than random symbols. A long passphrase of truly random words provieds randomness, making it mathematically impractical to guess through brute force.' },
       { text: 'Both take the same amount of time because they combine the compexity of both symbols and letters', correct: false, explanation: 'Symbols do not automatically make a password secure if it is short. Computers evaluate total combinations and length scales that numbers faster.' }
     ],
-    source: 'NCSC Guidance (Three Random Words) & General Information Theory (Shannon Entropy'
+    source: 'NCSC Guidance (Three Random Words) & General Information Theory (Shannon Entropy)'
   },
   {
     text: 'Why is reusing the exact same strong password across five different online accounts a major security risk?',

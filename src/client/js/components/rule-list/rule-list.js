@@ -2,7 +2,9 @@
  * @author Hanna Mårtensson <hm223dq@lnu.student.se>
  * @version 1.0.0
  */
+
 import { StyleLoader } from '../../utils/StyleLoader.js'
+
 /**
  * Displays the password rules.
  */
@@ -47,6 +49,7 @@ class RuleList extends HTMLElement {
     this.#rules.forEach(rule => {
       const li = document.createElement('li')
       li.textContent = `${rule.passed ? '✓' : '✗'} ${rule.label}`
+      li.classList.add(rule.passed ? 'rule-item-passed' : 'rule-item-failed')
       ruleList.appendChild(li)
     })
     this.shadowRoot.appendChild(ruleList)
