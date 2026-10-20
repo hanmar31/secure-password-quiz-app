@@ -4,6 +4,7 @@
  */
 
 import { PasswordGenerator, PasswordValidator } from '/modules/Password-module/src/index.js'
+import { StyleLoader } from '../../utils/StyleLoader.js'
 
 /**
  * A component that allows the user to generate a password.
@@ -13,6 +14,7 @@ class GenerateStep extends HTMLElement {
   #validator = new PasswordValidator()
   #generatedPassword
   #continueButton
+  #passwordDisplay
 
   /**
    * Creates the component and attaches a shadow DOM.
@@ -20,26 +22,54 @@ class GenerateStep extends HTMLElement {
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
+    new StyleLoader().applyTo(this.shadowRoot, import.meta.url)
 
-    this.#renderGenerateStage()
+    this.#render()
   }
 
   /**
-   * Renders the generate heading and button.
+   * Renders the outer slot machine layout container.
+   */
+  #render () {
+    this.shadowRoot.replaceChildren()
+
+    const slotsContainer = document.createElement('div')
+    slotsContainer.classList.add('slots-container')
+
+    // Append the two machine boxes (Left: Generator, Right: Validator)
+    slotsContainer.append(
+      this.#renderGenerateStage(),
+      this.#createValidationBox()
+    )
+
+    this.shadowRoot.appendChild(slotsContainer)
+  }
+
+  /**
+   * Renders the generate heading and button inside a machine box.
+   *
+   * @returns {HTMLDivElement} The generator box.
    */
   #renderGenerateStage () {
+    const generatorBox = document.createElement('div')
+    generatorBox.classList.add('machine-box')
+
     const generateHeader = document.createElement('h2')
-    generateHeader.textContent = 'Generate a password'
+    generateHeader.textContent = '1. Generate Password'
 
     const generateButton = document.createElement('button')
     generateButton.textContent = 'Generate'
 
+    this.#passwordDisplay = document.createElement('p')
+    this.#passwordDisplay.classList.add('display-box')
+    this.#passwordDisplay.textContent = 'Click generate...'
+
     generateButton.addEventListener('click', () => {
       this.#showGeneratedPassword()
-      generateButton.remove()
     })
 
-    this.shadowRoot.append(generateHeader, generateButton)
+    generatorBox.append(generateHeader, generateButton, this.#passwordDisplay)
+    return generatorBox
   }
 
   /**
@@ -47,11 +77,7 @@ class GenerateStep extends HTMLElement {
    */
   #showGeneratedPassword () {
     this.#generatedPassword = this.#generator.generate(this.#validator.getMinimumPasswordLength())
-
-    const passwordText = document.createElement('p')
-    passwordText.textContent = this.#generatedPassword
-    this.shadowRoot.appendChild(passwordText)
-    this.shadowRoot.appendChild(this.#createValidationBox())
+    this.#passwordDisplay.textContent = this.#generatedPassword
   }
 
   /**
@@ -61,21 +87,24 @@ class GenerateStep extends HTMLElement {
    */
   #createValidationBox () {
     const validationDiv = document.createElement('div')
+    validationDiv.classList.add('machine-box')
 
     const validationHeader = document.createElement('h2')
-    validationHeader.textContent = 'Validate the generated password here:'
+    validationHeader.textContent = '2. Validate Password'
 
     const validationInput = document.createElement('input')
     validationInput.type = 'text'
+    validationInput.placeholder = 'Paste password here...'
     validationInput.setAttribute('aria-label', 'Generated Password')
 
     const messageText = document.createElement('p')
+    messageText.classList.add('message-display')
 
     const validationButton = document.createElement('button')
     validationButton.textContent = 'Validate'
 
     validationButton.addEventListener('click', () => {
-      this.#showValidationResult(validationInput, messageText)
+      this.#showValidationResult(validationInput, messageText, validationDiv)
     })
 
     validationDiv.append(validationHeader, validationInput, validationButton, messageText)
@@ -86,10 +115,11 @@ class GenerateStep extends HTMLElement {
   /**
    * Shows an error message or the score and label for the pasted password.
    *
-   * @param {HTMLInputElement} input - The input holding the password.
-   * @param {HTMLParagraphElement} messageText - The paragraph that shows messages and the result.
+   * @param {HTMLInputElement} input The input holding the password.
+   * @param {HTMLParagraphElement} messageText The paragraph that shows messages and the result.
+   * @param {HTMLDivElement} validationDiv The parent box to attach the continue button to.
    */
-  #showValidationResult (input, messageText) {
+  #showValidationResult (input, messageText, validationDiv) {
     const inputPassword = input.value.trim()
     const errorMessage = this.#getInputError(inputPassword)
 
@@ -101,13 +131,13 @@ class GenerateStep extends HTMLElement {
 
     messageText.textContent = this.#createResultText(inputPassword)
 
-    this.#addContinueButton(messageText)
+    this.#addContinueButton(messageText, validationDiv)
   }
 
   /**
    * Returns an error message if the input password is invalid.
    *
-   * @param {string} inputPassword - The password entered by the user.
+   * @param {string} inputPassword The password entered by the user.
    * @returns {string} The error message, or an empty string if the input is valid.
    */
   #getInputError (inputPassword) {
@@ -123,7 +153,7 @@ class GenerateStep extends HTMLElement {
   /**
    * Creates a text description of the password validation result.
    *
-   * @param {string} inputPassword - The password to validate.
+   * @param {string} inputPassword The password to validate.
    * @returns {string} The password score and strength label.
    */
   #createResultText (inputPassword) {
@@ -134,12 +164,13 @@ class GenerateStep extends HTMLElement {
   /**
    * Adds the continue button after the message if it does not already exist.
    *
-   * @param {HTMLParagraphElement} messageText - The paragraph to place the button after.
+   * @param {HTMLParagraphElement} messageText The paragraph to place the button after.
+   * @param {HTMLDivElement} validationDiv The box to append the button to.
    */
-  #addContinueButton (messageText) {
+  #addContinueButton (messageText, validationDiv) {
     if (this.#continueButton === undefined) {
       this.#continueButton = this.#createContinueButton()
-      messageText.after(this.#continueButton)
+      validationDiv.appendChild(this.#continueButton)
     }
   }
 
@@ -151,6 +182,7 @@ class GenerateStep extends HTMLElement {
   #createContinueButton () {
     const continueButton = document.createElement('button')
     continueButton.textContent = 'Continue'
+    continueButton.classList.add('continue-button')
 
     continueButton.addEventListener('click', () => {
       this.dispatchEvent(new CustomEvent('password-tested', {
@@ -161,4 +193,5 @@ class GenerateStep extends HTMLElement {
     return continueButton
   }
 }
+
 customElements.define('generate-step', GenerateStep)
