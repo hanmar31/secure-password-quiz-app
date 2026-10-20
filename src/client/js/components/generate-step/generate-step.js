@@ -36,7 +36,6 @@ class GenerateStep extends HTMLElement {
     const slotsContainer = document.createElement('div')
     slotsContainer.classList.add('slots-container')
 
-    // Append the two machine boxes (Left: Generator, Right: Validator)
     slotsContainer.append(
       this.#renderGenerateStage(),
       this.#createValidationBox()
