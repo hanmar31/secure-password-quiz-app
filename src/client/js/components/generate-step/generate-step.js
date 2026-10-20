@@ -28,7 +28,7 @@ class GenerateStep extends HTMLElement {
   }
 
   /**
-   * Renders the outer slot machine layout container.
+   * Renders the generator box and the validation box side by side.
    */
   #render () {
     this.shadowRoot.replaceChildren()
@@ -65,6 +65,7 @@ class GenerateStep extends HTMLElement {
 
     generateButton.addEventListener('click', () => {
       this.#showGeneratedPassword()
+      generateButton.disabled = true
     })
 
     generatorBox.append(generateHeader, generateButton, this.#passwordDisplay)
@@ -93,7 +94,7 @@ class GenerateStep extends HTMLElement {
 
     const validationInput = document.createElement('input')
     validationInput.type = 'text'
-    validationInput.placeholder = 'Paste password here...'
+    validationInput.placeholder = 'Paste the generated password here...'
     validationInput.setAttribute('aria-label', 'Generated Password')
 
     const messageText = document.createElement('p')
@@ -114,9 +115,9 @@ class GenerateStep extends HTMLElement {
   /**
    * Shows an error message or the score and label for the pasted password.
    *
-   * @param {HTMLInputElement} input The input holding the password.
-   * @param {HTMLParagraphElement} messageText The paragraph that shows messages and the result.
-   * @param {HTMLDivElement} validationDiv The parent box to attach the continue button to.
+   * @param {HTMLInputElement} input - The input holding the password.
+   * @param {HTMLParagraphElement} messageText - The paragraph that shows messages and the result.
+   * @param {HTMLDivElement} validationDiv - The parent box to attach the continue button to.
    */
   #showValidationResult (input, messageText, validationDiv) {
     const inputPassword = input.value.trim()
@@ -136,7 +137,7 @@ class GenerateStep extends HTMLElement {
   /**
    * Returns an error message if the input password is invalid.
    *
-   * @param {string} inputPassword The password entered by the user.
+   * @param {string} inputPassword - The password entered by the user.
    * @returns {string} The error message, or an empty string if the input is valid.
    */
   #getInputError (inputPassword) {
@@ -152,7 +153,7 @@ class GenerateStep extends HTMLElement {
   /**
    * Creates a text description of the password validation result.
    *
-   * @param {string} inputPassword The password to validate.
+   * @param {string} inputPassword - The password to validate.
    * @returns {string} The password score and strength label.
    */
   #createResultText (inputPassword) {
@@ -163,10 +164,9 @@ class GenerateStep extends HTMLElement {
   /**
    * Adds the continue button after the message if it does not already exist.
    *
-   * @param {HTMLParagraphElement} messageText The paragraph to place the button after.
    * @param {HTMLDivElement} validationDiv The box to append the button to.
    */
-  #addContinueButton (messageText, validationDiv) {
+  #addContinueButton (validationDiv) {
     if (this.#continueButton === undefined) {
       this.#continueButton = this.#createContinueButton()
       validationDiv.appendChild(this.#continueButton)

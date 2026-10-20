@@ -20,7 +20,7 @@ font-weight: bold;
 transition: background .2s, transform 0.2s; 
 border-radius: 7px;
 border: 2px solid #ebb475;
-width: 1000px;
+width: 900px;
 max-width: 100%;
 box-sizing: border-box;
 text-align: left;
@@ -37,7 +37,7 @@ button:hover {
 }
 
 .feedback-box {
-    width: 1000px;
+    width: 900px;
     max-width: 100%;
     box-sizing: border-box;
     padding: 15px 20px;

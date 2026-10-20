@@ -63,8 +63,16 @@ button {
     box-sizing: border-box;
 }
 
-button:hover {
+button:not(:disabled):hover {
     background-color: #eec18e;
+}
+
+button:disabled {
+    background-color: #f0f0f0;
+    border-color: #dcdcdc;
+    color: #a0a0a0;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .display-box {
@@ -95,6 +103,6 @@ button:hover {
     color: #fff;
 }
 
-.continue-button:hover {
+.continue-button:not(:disabled):hover {
     background-color: #7fb15e;
 }
