@@ -36,6 +36,7 @@ class RuleChecklist {
   #createLengthRule () {
     return {
       label: `Use at least ${this.#validator.getMinimumPasswordLength()} characters`,
+
       /**
        * Checks that the password is long enough.
        *
@@ -54,6 +55,7 @@ class RuleChecklist {
   #createNoSpacesRule () {
     return {
       label: 'No spaces allowed',
+
       /**
        * Checks that the password has no spaces.
        *
@@ -72,6 +74,7 @@ class RuleChecklist {
   #createUppercaseRule () {
     return {
       label: 'Use at least one upper case character',
+
       /**
        * Checks that the password contains at least one upper case character.
        *
@@ -90,6 +93,7 @@ class RuleChecklist {
   #createLowercaseRule () {
     return {
       label: 'Use at least one lower case character',
+
       /**
        * Checks that the password contains at least one lower case character.
        *
@@ -108,6 +112,7 @@ class RuleChecklist {
   #createNumberRule () {
     return {
       label: 'Use at least one number',
+
       /**
        * Checks that the password contains at least one number.
        *
@@ -126,6 +131,7 @@ class RuleChecklist {
   #createSpecialCharacterRule () {
     return {
       label: 'Use at least one special character',
+
       /**
        * Checks that the password contains at least one special character.
        *

@@ -17,7 +17,7 @@ const quizData = [
     text: 'Which of the following options would take a brute-force tool longer to break?',
     options: [
       { text: 'A short complex password like Tr4r&3 (6 characters with both symbols and numbers)', correct: false, explanation: 'Symbols help, but human-chosen complexity rules usually result in shorter lengths because human brains struggle to remember truly random short strings.' },
-      { text: 'A longer passphrase of random words like horse-lollipop-stapler-library(30 characters)', correct: true, explanation: 'Length is actually more important than random symbols. A long passphrase of truly random words provieds randomness, making it mathematically impractical to guess through brute force.' },
+      { text: 'A longer passphrase of random words like horse-lollipop-stapler-library(30 characters)', correct: true, explanation: 'Length is actually more important than random symbols. A long passphrase of truly random words provides randomness, making it mathematically impractical to guess through brute force.' },
       { text: 'Both take the same amount of time because they combine the compexity of both symbols and letters', correct: false, explanation: 'Symbols do not automatically make a password secure if it is short. Computers evaluate total combinations and length scales that numbers faster.' }
     ],
     source: 'NCSC Guidance (Three Random Words) & General Information Theory (Shannon Entropy)'
@@ -26,7 +26,7 @@ const quizData = [
     text: 'Why is reusing the exact same strong password across five different online accounts a major security risk?',
     options: [
       { text: 'It slows down your web browser performance when being logged in to multiple websites at once.', correct: false, explanation: ' Password reuse has no impact on browser loading speeds or network performance.' },
-      { text: 'It violates standard HTTPS encryption protocols. ', correct: false, explanation: 'Website encryptions (HTTPS) protects data in transit between your browser and the server, but it cannot protect credentials, if a database is stolen from a compromised backend server.' },
+      { text: 'It violates standard HTTPS encryption protocols. ', correct: false, explanation: 'Website encryptions (HTTPS) protects data in transit between your browser and the server, but it cannot protect credentials if a database is stolen from a compromised backend server.' },
       { text: 'If one website suffers a data breach, attackers can use those credentials to break into your other accounts', correct: true, explanation: 'This is known as credential stuffing. Hackers regularly buy leaked password databases from minor websites and automatically test those exact credentials on major platforms.' }
     ],
     source: 'OWASP Top Ten & Have I Been Pwned (Troy Hunt)'

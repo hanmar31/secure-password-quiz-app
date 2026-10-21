@@ -99,6 +99,5 @@ The Secure Password Quiz App is an interactive educational web application desig
 - Known Issues & Constraints:
     - The Quiz Engine module does not expose explanation strings, requiring the wrapper application to maintain its own decoupled copy of quiz feedback data.
     - The password generator relies on `Math.random()`, which is a standard pseudo-random number generator and is not cryptographically secure. It is intended strictly for educational demonstration purposes rather than generating production-grade, secure credentials.
-    - Due to the asynchronous injection of styles via `StyleLoader` inside Shadow DOM components, a split-second flash of unstyled content may occur during initial rendering in the live application. This trade-off was acknowledged, but left unaddressed due to time constraints in favor of prioritizing core functionality and Clean Code architecture.
 
 
