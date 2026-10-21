@@ -3,6 +3,7 @@
  * @version 1.0.0
  */
 
+import { ElementBuilder } from '../../utils/ElementBuilder.js'
 import { StyleLoader } from '../../utils/StyleLoader.js'
 
 /**
@@ -12,6 +13,7 @@ class QuizView extends HTMLElement {
   #session
   #questionContent
   #stylesReady
+  #elements = new ElementBuilder()
 
   /**
    * Creates the component and attaches a shadow DOM.
@@ -67,8 +69,7 @@ class QuizView extends HTMLElement {
 
     const currentQuestion = this.#session.getCurrentQuestion()
 
-    const questionText = document.createElement('p')
-    questionText.textContent = currentQuestion.getText()
+    const questionText = this.#elements.createTextElement('p', currentQuestion.getText())
 
     this.shadowRoot.appendChild(questionText)
 
@@ -106,8 +107,7 @@ class QuizView extends HTMLElement {
    */
   #renderFeedback (currentQuestion, index, correct) {
     this.shadowRoot.replaceChildren()
-    const feedbackHeader = document.createElement('h2')
-    feedbackHeader.textContent = correct ? 'Correct!' : 'Incorrect!'
+    const feedbackHeader = this.#elements.createTextElement('h2', correct ? 'Correct!' : 'Incorrect!')
 
     const details = this.#questionContent.getDetails(currentQuestion)
     const correctOption = details.options.find(option => option.correct)
