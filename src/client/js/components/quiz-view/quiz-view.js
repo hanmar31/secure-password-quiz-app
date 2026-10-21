@@ -60,7 +60,7 @@ class QuizView extends HTMLElement {
   }
 
   /**
-   * Renders the current question.
+   * Renders the current question with the option buttons.
    */
   #render () {
     this.shadowRoot.replaceChildren()
@@ -73,16 +73,28 @@ class QuizView extends HTMLElement {
     this.shadowRoot.appendChild(questionText)
 
     for (const [index, optionText] of currentQuestion.getOptions().entries()) {
-      const optionButton = document.createElement('button')
-      optionButton.textContent = optionText
-
-      optionButton.addEventListener('click', () => {
-        const correct = this.#session.submitAnswer(index)
-        this.#renderFeedback(currentQuestion, index, correct)
-      })
-
-      this.shadowRoot.append(optionButton)
+      this.shadowRoot.append(this.#createOptionButton(currentQuestion, index, optionText))
     }
+  }
+
+  /**
+   * Creates a button for one answer option that submits the answer when clicked.
+   *
+   * @param {object} currentQuestion - The question being answered.
+   * @param {number} index - The position of the option.
+   * @param {string} optionText - The text shown on the button.
+   * @returns {HTMLButtonElement} The option button.
+   */
+  #createOptionButton (currentQuestion, index, optionText) {
+    const optionButton = document.createElement('button')
+    optionButton.textContent = optionText
+
+    optionButton.addEventListener('click', () => {
+      const correct = this.#session.submitAnswer(index)
+      this.#renderFeedback(currentQuestion, index, correct)
+    })
+
+    return optionButton
   }
 
   /**
