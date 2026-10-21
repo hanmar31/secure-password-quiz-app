@@ -56,20 +56,29 @@ class GenerateStep extends HTMLElement {
     const generateHeader = document.createElement('h2')
     generateHeader.textContent = '1. Generate Password'
 
-    const generateButton = document.createElement('button')
-    generateButton.textContent = 'Generate'
-
     this.#passwordDisplay = document.createElement('p')
     this.#passwordDisplay.classList.add('display-box')
     this.#passwordDisplay.textContent = 'Click generate...'
+
+    generatorBox.append(generateHeader, this.#createGenerateButton(), this.#passwordDisplay)
+    return generatorBox
+  }
+
+  /**
+   * Creates the generate button.
+   *
+   * @returns {HTMLButtonElement} The generate button.
+   */
+  #createGenerateButton () {
+    const generateButton = document.createElement('button')
+    generateButton.textContent = 'Generate'
 
     generateButton.addEventListener('click', () => {
       this.#showGeneratedPassword()
       generateButton.disabled = true
     })
 
-    generatorBox.append(generateHeader, generateButton, this.#passwordDisplay)
-    return generatorBox
+    return generateButton
   }
 
   /**
