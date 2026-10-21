@@ -41,13 +41,22 @@ class PasswordApp extends HTMLElement {
   }
 
   /**
-   * Displays a success message and a button to start the quiz.
+   * Shows the reveal message with a button that starts the quiz.
    */
   #showReveal () {
     this.shadowRoot.replaceChildren()
     const revealMessage = document.createElement('p')
     revealMessage.textContent = 'Great Work! You created a password that follows all rules on the website. But how much do you really know about safe passwords?'
 
+    this.shadowRoot.append(revealMessage, this.#createStartQuizButton())
+  }
+
+  /**
+   * Creates the start quiz button.
+   *
+   * @returns {HTMLButtonElement} The start quiz button.
+   */
+  #createStartQuizButton () {
     const startQuizButton = document.createElement('button')
     startQuizButton.textContent = 'Start the Quiz!'
 
@@ -55,7 +64,7 @@ class PasswordApp extends HTMLElement {
       this.#showQuiz()
     })
 
-    this.shadowRoot.append(revealMessage, startQuizButton)
+    return startQuizButton
   }
 
   /**
