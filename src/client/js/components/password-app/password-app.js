@@ -8,12 +8,14 @@ import { StyleLoader } from '../../utils/StyleLoader.js'
 import '../password-rule-checker/index.js'
 import '../quiz-view/index.js'
 import '../generate-step/index.js'
+import { ElementBuilder } from '../../utils/ElementBuilder.js'
 
 /**
  * Displays the password app.
  */
 class PasswordApp extends HTMLElement {
   #questionContent = new QuizContent()
+  #elements = new ElementBuilder()
 
   /**
    * Creates the component and attaches a shadow DOM.
@@ -45,9 +47,8 @@ class PasswordApp extends HTMLElement {
    */
   #showReveal () {
     this.shadowRoot.replaceChildren()
-    const revealMessage = document.createElement('p')
-    revealMessage.textContent = 'Great Work! You created a password that follows all rules on the website. But how much do you really know about safe passwords?'
-
+    const message = 'Great Work! You created a password that follows all rules on the website. But how much do you really know about safe passwords?'
+    const revealMessage = this.#elements.createTextElement('p', message)
     this.shadowRoot.append(revealMessage, this.#createStartQuizButton())
   }
 
@@ -123,11 +124,10 @@ class PasswordApp extends HTMLElement {
    */
   #showEndScreen () {
     this.shadowRoot.replaceChildren()
-    const endScreenTitle = document.createElement('h2')
-    endScreenTitle.textContent = 'You made it! Quiz completed!'
+    const endScreenTitle = this.#elements.createTextElement('h2', 'You made it! Quiz completed!')
 
-    const endScreenParagraph = document.createElement('p')
-    endScreenParagraph.textContent = 'Hopefully now you know a little bit more about password security and what to keep in mind when you create a password. And remember a password that follows rules on a website are not guaranteed to be safe.'
+    const endMessage = 'Hopefully now you know a little bit more about password security and what to keep in mind when you create a password. And remember a password that follows rules on a website are not guaranteed to be safe.'
+    const endScreenParagraph = this.#elements.createTextElement('p', endMessage)
 
     this.shadowRoot.append(endScreenTitle, endScreenParagraph, this.#createStartOverButton())
   }
