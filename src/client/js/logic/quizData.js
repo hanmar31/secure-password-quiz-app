@@ -17,10 +17,10 @@ const quizData = [
     text: 'Which of the following options would take a brute-force tool longer to break?',
     options: [
       { text: 'A short complex password like Tr4r&3 (6 characters with both symbols and numbers)', correct: false, explanation: 'Symbols help, but human-chosen complexity rules usually result in shorter lengths because human brains struggle to remember truly random short strings.' },
-      { text: 'A longer passphrase of random words like horse-lollipop-stapler-library(30 characters)', correct: true, explanation: 'Length is actually more important than random symbols. A long passphrase of truly random words provides randomness, making it mathematically impractical to guess through brute force.' },
-      { text: 'Both take the same amount of time because they combine the compexity of both symbols and letters', correct: false, explanation: 'Symbols do not automatically make a password secure if it is short. Computers evaluate total combinations and length scales that numbers faster.' }
+      { text: 'A longer passphrase of random words like horse-lollipop-stapler-library (30 characters)', correct: true, explanation: 'Length is actually more important than random symbols. A long passphrase of truly random words provides randomness, making it mathematically impractical to guess through brute force.' },
+      { text: 'Both take the same amount of time because they combine the compexity of both symbols and letters', correct: false, explanation: 'Symbols do not automatically make a password secure if it is short. Computers evaluate total combinations and length increases that number much faster.' }
     ],
-    source: 'NCSC Guidance (Three Random Words) & General Information Theory (Shannon Entropy)'
+    source: 'NCSC Guidance (Three Random Words)'
   },
   {
     text: 'Why is reusing the exact same strong password across five different online accounts a major security risk?',

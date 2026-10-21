@@ -87,7 +87,7 @@ The Secure Password Quiz App is an interactive educational web application desig
     - **NIST Special Publication 800-63B** (*Digital Identity Guidelines*)
     - **UK National Cyber Security Centre (NCSC)** Password Guidance
     - **OWASP Top Ten** & **OWASP Cryptographic Storage Cheat Sheet**
-    - **Have I Been Pwned** breach telemetry and **Shannon Entropy** information theory.
+    - **Have I Been Pwned** breach telemetry.
 - **Honest Limitations:**
     - The password generator relies on standard pseudo-random functions (`Math.random()`) and is intended strictly as a demo, not for creating passwords for real accounts.
     - The validator checks static composition rules, not real-world security.
