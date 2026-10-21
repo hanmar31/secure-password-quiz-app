@@ -119,7 +119,7 @@ class PasswordApp extends HTMLElement {
   }
 
   /**
-   * Displays the end screen with a message and startover button when the quiz is finished.
+   * Displays the end screen with a message with a start over button when the quiz is finished.
    */
   #showEndScreen () {
     this.shadowRoot.replaceChildren()
@@ -129,6 +129,15 @@ class PasswordApp extends HTMLElement {
     const endScreenParagraph = document.createElement('p')
     endScreenParagraph.textContent = 'Hopefully now you know a little bit more about password security and what to keep in mind when you create a password. And remember a password that follows rules on a website are not guaranteed to be safe.'
 
+    this.shadowRoot.append(endScreenTitle, endScreenParagraph, this.#createStartOverButton())
+  }
+
+  /**
+   * Creates a start over button.
+   *
+   * @returns {HTMLButtonElement} The start over button.
+   */
+  #createStartOverButton () {
     const startOverButton = document.createElement('button')
     startOverButton.textContent = 'Start Over'
 
@@ -136,7 +145,7 @@ class PasswordApp extends HTMLElement {
       this.#render()
     })
 
-    this.shadowRoot.append(endScreenTitle, endScreenParagraph, startOverButton)
+    return startOverButton
   }
 }
 customElements.define('password-app', PasswordApp)
