@@ -13,6 +13,7 @@ import { StyleLoader } from '../../utils/StyleLoader.js'
 class PasswordRuleChecker extends HTMLElement {
   #ruleList = document.createElement('rule-list')
   #ruleChecklist = new RuleChecklist()
+
   /**
    * Creates the component and attaches a shadow DOM.
    */
@@ -36,6 +37,17 @@ class PasswordRuleChecker extends HTMLElement {
     passwordInput.type = 'text'
     passwordInput.setAttribute('aria-label', 'Password')
 
+    inputContainer.append(passwordInput, this.#createConfirmButton(passwordInput))
+    this.shadowRoot.append(inputContainer, this.#ruleList)
+  }
+
+  /**
+   * Creates the confirm button that checks the typed password against the rules.
+   *
+   * @param {HTMLInputElement} passwordInput - The input holding the password to check.
+   * @returns {HTMLButtonElement} The confirm button.
+   */
+  #createConfirmButton (passwordInput) {
     const confirmButton = document.createElement('button')
     confirmButton.textContent = 'Confirm'
 
@@ -51,8 +63,7 @@ class PasswordRuleChecker extends HTMLElement {
       }
     })
 
-    inputContainer.append(passwordInput, confirmButton)
-    this.shadowRoot.append(inputContainer, this.#ruleList)
+    return confirmButton
   }
 }
 
