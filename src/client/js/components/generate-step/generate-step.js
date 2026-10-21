@@ -109,6 +109,22 @@ class GenerateStep extends HTMLElement {
     const messageText = document.createElement('p')
     messageText.classList.add('message-display')
 
+    const validationButton = this.#createValidateButton(validationInput, messageText, validationDiv)
+
+    validationDiv.append(validationHeader, validationInput, validationButton, messageText)
+
+    return validationDiv
+  }
+
+  /**
+   * Creates the validate button that checks the pasted password.
+   *
+   * @param {HTMLInputElement} validationInput - The input holding the pasted password.
+   * @param {HTMLParagraphElement} messageText - The paragraph that shows messages and the result.
+   * @param {HTMLDivElement} validationDiv - The box the continue button is added to.
+   * @returns {HTMLButtonElement} The validate button.
+   */
+  #createValidateButton (validationInput, messageText, validationDiv) {
     const validationButton = document.createElement('button')
     validationButton.textContent = 'Validate'
 
@@ -116,9 +132,7 @@ class GenerateStep extends HTMLElement {
       this.#showValidationResult(validationInput, messageText, validationDiv)
     })
 
-    validationDiv.append(validationHeader, validationInput, validationButton, messageText)
-
-    return validationDiv
+    return validationButton
   }
 
   /**
