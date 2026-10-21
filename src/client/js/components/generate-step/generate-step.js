@@ -5,6 +5,7 @@
 
 import { PasswordGenerator, PasswordValidator } from '/modules/Password-module/src/index.js'
 import { StyleLoader } from '../../utils/StyleLoader.js'
+import { ElementBuilder } from '../../utils/ElementBuilder.js'
 
 /**
  * A component that allows the user to generate a password.
@@ -12,6 +13,7 @@ import { StyleLoader } from '../../utils/StyleLoader.js'
 class GenerateStep extends HTMLElement {
   #generator = new PasswordGenerator()
   #validator = new PasswordValidator()
+  #elements = new ElementBuilder()
   #generatedPassword
   #continueButton
   #passwordDisplay
@@ -53,12 +55,9 @@ class GenerateStep extends HTMLElement {
     const generatorBox = document.createElement('div')
     generatorBox.classList.add('machine-box')
 
-    const generateHeader = document.createElement('h2')
-    generateHeader.textContent = '1. Generate Password'
+    const generateHeader = this.#elements.createTextElement('h2', '1. Generate Password')
 
-    this.#passwordDisplay = document.createElement('p')
-    this.#passwordDisplay.classList.add('display-box')
-    this.#passwordDisplay.textContent = 'Click generate...'
+    this.#passwordDisplay = this.#elements.createTextElement('p', 'Click generate...', 'display-box')
 
     generatorBox.append(generateHeader, this.#createGenerateButton(), this.#passwordDisplay)
     return generatorBox
@@ -98,16 +97,14 @@ class GenerateStep extends HTMLElement {
     const validationDiv = document.createElement('div')
     validationDiv.classList.add('machine-box')
 
-    const validationHeader = document.createElement('h2')
-    validationHeader.textContent = '2. Validate Password'
+    const validationHeader = this.#elements.createTextElement('h2', '2. Validate Password')
 
     const validationInput = document.createElement('input')
     validationInput.type = 'text'
     validationInput.placeholder = 'Paste the generated password here...'
     validationInput.setAttribute('aria-label', 'Generated Password')
 
-    const messageText = document.createElement('p')
-    messageText.classList.add('message-display')
+    const messageText = this.#elements.createTextElement('p', '', 'message-display')
 
     const validationButton = this.#createValidateButton(validationInput, messageText, validationDiv)
 
