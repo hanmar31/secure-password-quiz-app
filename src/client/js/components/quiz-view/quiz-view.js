@@ -11,6 +11,7 @@ import { StyleLoader } from '../../utils/StyleLoader.js'
 class QuizView extends HTMLElement {
   #session
   #questionContent
+  #stylesReady
 
   /**
    * Creates the component and attaches a shadow DOM.
@@ -18,7 +19,7 @@ class QuizView extends HTMLElement {
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
-    new StyleLoader().applyTo(this.shadowRoot, import.meta.url)
+    this.#stylesReady = new StyleLoader().applyTo(this.shadowRoot, import.meta.url)
   }
 
   /**
@@ -28,7 +29,7 @@ class QuizView extends HTMLElement {
    */
   set session (session) {
     this.#session = session
-    this.#render()
+    this.#stylesReady.then(() => this.#render())
   }
 
   /**
