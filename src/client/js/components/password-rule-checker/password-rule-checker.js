@@ -21,7 +21,7 @@ class PasswordRuleChecker extends HTMLElement {
     this.attachShadow({ mode: 'open' })
     new StyleLoader().applyTo(this.shadowRoot, import.meta.url)
 
-    this.#render()
+      .then(() => this.#render())
   }
 
   /**

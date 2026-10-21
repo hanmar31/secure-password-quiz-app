@@ -22,7 +22,7 @@ class PasswordApp extends HTMLElement {
     super()
     this.attachShadow({ mode: 'open' })
     new StyleLoader().applyTo(this.shadowRoot, import.meta.url)
-    this.#render()
+      .then(() => this.#render())
   }
 
   /**
